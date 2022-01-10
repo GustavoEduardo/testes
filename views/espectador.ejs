@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <title>App Video</title>
+   <link rel="stylesheet" href="index.css" />
+ </head>
+ <body>
+   <h1>Bem vindo a Sala Espectador</h1>
+ </body>
+ <button id="join-button">Entrar na sala</button>
+ <button id="leave-button" class="hidden">Sair da sala</button>
+ <div id="waiting-room" class="hidden">
+   <p>Aguarde. Em brave iremos começar.</p>
+   <img src="https://media-exp1.licdn.com/dms/image/C4E0BAQEo8dg9XjGGRA/company-logo_200_200/0/1585870704388?e=2159024400&v=beta&t=rp7jRKXLRYAQDUUbTd3zSbv3_q6AzaVox16ovC24nuw">
+ </div>
+ <div id="local-media-container"></div>
+ <script src="./index.js"></script>
+ <script src="//media.twiliocdn.com/sdk/js/video/releases/2.3.0/twilio-video.min.js"></script>
+
+ <!-- Permitir que o espectador entre e saia da sala de chamada de vídeo
+Verificar se o prestador está na sala quando o espectador entrar, para que possamos exibir a sala de espera (ou não)
+Assinar futuros participantes para que possamos exibir ou ocultar a imagem de espera adequadamente
+ -->
+ <script>
+    const providerIdentity = "provider";
+ 
+    async function onJoinButtonClick(event) {
+      await joinRoom(event, {nome:"espectador"+new Date().getTime(), tipo: "espectador"});
+ 
+      // Sala de espera caso o prestador não esteja na sala
+      if (!isProviderPresent(room.participants)) {
+        showWaitingRoom();
+      }
+ 
+      // Se o prestador entrar, esconde a sala de espera
+      room.on("participantConnected", (participant) => {
+        if (participant.identity === providerIdentity) {
+          hideWaitingRoom();
+        }
+      });
+ 
+      //esconder a sala de espera se o paciente desconectar
+      room.on("disconnected", () => {
+        hideWaitingRoom();
+      });
+      event.preventDefault();
+    }
+ 
+    const isProviderPresent = (participantMap) => {
+      for (const participant of participantMap.values()) {
+        if (participant.identity === providerIdentity) {
+          return true;
+        }
+      }
+      return false;
+    };
+ 
+    const hideWaitingRoom = () => {
+      const waitingRoom = document.getElementById("waiting-room");
+      // verifica se sala de espera está visível antes de esconder,
+      // apenas para evitar bugs
+      if (!waitingRoom.classList.contains("hidden")) {
+        waitingRoom.classList.toggle("hidden");
+      }
+    };
+ 
+    const showWaitingRoom = () => {
+      const waitingRoom = document.getElementById("waiting-room");
+      // verifica se sala de espera está escondida antes de mostra-la
+      // penas para evitar bugs
+      if (waitingRoom.classList.contains("hidden")) {
+        waitingRoom.classList.toggle("hidden");
+      }
+    };
+ 
+    
+    const button = document.getElementById("join-button");
+    button.addEventListener("click", onJoinButtonClick);
+ 
+    const leaveButton = document.getElementById("leave-button");
+    leaveButton.addEventListener("click", onLeaveButtonClick);
+  </script>
+ </html>
