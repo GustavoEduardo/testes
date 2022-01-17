@@ -8,4 +8,3 @@ const routes = Router();
 routes.use(Video);
 routes.use(Catalogo);
 export default routes;
-

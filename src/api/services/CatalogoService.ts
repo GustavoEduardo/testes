@@ -5,9 +5,9 @@ import CatalogoRepositories from '../repositories/CatalogoRepositories';
 
 class CatalogoService {   
    
-    async criar( ) {
+    async atulaizar(requests: Array<object>, catalog_id: string) {
         try{      
-            SuccessReturn.result = await CatalogoRepositories.criar();                 
+            SuccessReturn.result = await CatalogoRepositories.atulaizar(requests,catalog_id);                 
         }catch ( e: any ) {
             ErrorReturn.message = e.toString();
             return ErrorReturn;
