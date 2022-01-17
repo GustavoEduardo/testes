@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 //thttps://developers.facebook.com/tools/explorer/1062138014329859/?method=POST&path=644469043373877
-var access_token = "EAAPGAkcL7AMBAL283F8Hpi9PkMUgjvNpwCYJjv8LOFtXYPXjfbDdNOMP3WFwPPUm0PhiSYQKzA8cLwZBMGqQvwPNxOSX5ChVOQcU5pnbDLqhdFCbRTRMlXZAxJZBYy2TXKpmd3jM0ZA1YCUscVZBHrdZAyZBjQhoWMespMYpI2lvIjaDkbYXJdM4dKlvgzYUGJf9mq3oJ3t2BWBUFCozjExY1gCYKOHJqjYvPGx3vfZB7hVMc4sjoC9wp1SmZCJA7GT0ZD"
+var access_token = "EAAPGAkcL7AMBAGEJCYCQg0A0WU06lKPuB6IKgNFmKaYmQBuf6Yc0r9BVICh7xYgZBkMXBYnvLKu22H9jHovCdgY46r2bt3tVEiJLyCgGjZAvG52YuOZBXgZBJ83MrhCVcCdK6RtmkBFaS5TJy2MSPWXKvZCaZAJOpToK5hCZC95hgnYu56c0C2ItajR60WnhLSvZBc8dX2jvlmSdwCdXYU6UrDaV979CKhHvdKsvGm0RUVhya1ZCFvc3aORNt3Epy6ccZD"
 // var catalog_id = '644469043373877';
 // var requests= [
 //             {
@@ -20,7 +20,11 @@ var access_token = "EAAPGAkcL7AMBAL283F8Hpi9PkMUgjvNpwCYJjv8LOFtXYPXjfbDdNOMP3WF
 //                     availability:"in stock"
 //                 }
 //             }
-//         ]
+//]
+
+
+// applinks : Links to mobile apps
+// type: object<>
 
 class CatalogoRepositories{         
 
@@ -30,8 +34,8 @@ class CatalogoRepositories{
                 access_token,
                 requests
             })
-            
-            return;
+
+            console.log("Atualização realizada")
         } catch (error) {
             return error
         }
